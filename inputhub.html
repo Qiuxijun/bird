@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>忆海心阶配装器</title>
+<script src="data.js"></script>
+<style type="text/css">
+.link {
+	color: #03F;
+	text-decoration:none;
+}
+.Button {
+	height: 40px;
+	width: 25%;
+	float: left;
+	text-align: center;
+	line-height: 40px;
+	background-repeat: repeat-x;
+	background-position: center;
+	top: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding: 0px;
+}
+#Button2{
+	background-image: url(image/button.png);	
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+	background-color: #EAF8FF;
+}
+hr.fgx {
+	border: 1px dashed #2E9FCC;
+}
+.Box {
+	margin-top: 0px;
+	width: 100%;
+	position: static;
+}
+.fgx2 {
+	position: relative;
+	border: 1px dashed #2E9FCC;
+	top: 8px;
+}
+.wb {
+	font-size: 80%;
+}
+p.t {
+	font-size: 140%;
+	font-weight : 800;
+	color: #1F4499;
+	text-align: center;
+}
+#login_click{
+	margin-top: 32px;
+	height: 40px;
+	text-align: center;
+}
+#inoutbuttion {
+	margin-right: 20%;
+	padding: 0px;
+	margin-left: 20%;
+}
+.Opition {
+	font-size: 10%;
+	text-align: center;
+}
+.title {
+	color: #00F;
+	text-align: center;
+}
+.tip {
+	font-size: 80%;
+	text-align:center;
+}
+#login_click a 
+{
+    text-decoration:none;
+	background:#2f435e;
+	color:#f2f2f2;
+	
+	padding: 10px 30px 10px 30px;
+	font-size:16px;
+	font-weight:bold;
+	border-radius:3px;
+	
+	-webkit-transition:all linear 0.30s;
+	-moz-transition:all linear 0.30s;
+	transition:all linear 0.30s;
+	
+	}
+   #login_click a:hover { background:#385f9e; }
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: #EAF8FF;
+}
+.o {
+	float: left;
+}
+.i {
+	float: right;
+}
+hr.fgx {
+	border: 1px dashed #2E9FCC;
+}
+
+    #page {
+	text-align: center;
+	padding-left: 20px;
+	margin-right: 20px;
+}
+    #File {
+	font-size: 8px;
+	width: 100%;
+}
+</style>
+</head>
+
+<body>
+<p class="t">忆海心阶配装器</p>
+<p align="center" class="wb"><a class="link" href="https://www.weibo.com/u/6573931053">@山药攻略组<img src="image/logo.jpg" width="40" height="40" /></a></p>
+<hr class="fgx">
+<div class="Box">
+  <div class="Button" id="Button1" onclick="JumpWeb(1)">心阶优解</div>
+  <div class="Button" id="Button2" onclick="JumpWeb(2)">衣柜数据</div>
+  <div class="Button" id="Button3" onclick="JumpWeb(3)">加成数据</div>
+  <div class="Button" id="Button4" onclick="JumpWeb(4)">使用说明</div>
+</div>
+<hr class="fgx2">
+<p class="title">——请选择输入模式——</p>
+<div id="page"><p>
+
+  <input type="radio" class="Opition" name="ViewMode" value="2" id="ViewMode_2" checked="true">
+    1、按理念研究输入</p>
+  <p class="tip">使用方法：进入游戏——打开理念研究所——选择套装——点开左上角部件一览，按顺序对照查看服饰并录入数据。注：我们<font color="red">极度推荐</font>您使用此方法。另外，不管您的收集度如何，此方法适合<font color="red">从零</font>图鉴开始录入。</p>
+     <p>&nbsp;</p>
+	 
+    <input type="radio" class="Opition" name="ViewMode" value="1" id="ViewMode_0" >
+    2、按图鉴界面输入<p class="tip">使用方法：进入游戏——打开图鉴界面——依次点开头发至饰品项，按已获取或未获取进行批量输入。</p>
+
+ <p>&nbsp;</p>
+  <input type="radio" class="Opition" name="ViewMode" value="2" id="ViewMode_1">
+    3、按自由搭配输入</p>
+  <p class="tip">使用方法：进入游戏——打开自由搭配——筛选属性——依次点开头发至饰品项，按顺序对照查看服饰并录入数据。注：不管您的收集度如何，此方法适合<font color="red">从零</font>图鉴开始录入，使用前请先填写学院和理念数据。</p>
+   <p>&nbsp;</p>
+
+
+
+   <p id="newload1"> <input type="radio" class="Opition2" name="ViewMode2" value="1" id="StarMode_1" checked="true">
+    我的收集度较高（初始默认全收集）</p>
+
+ 
+  <p id="newload2"><input type="radio" class="Opition2" name="ViewMode2" value="2" id="StarMode_2">
+    我的收集度较低（初始默认除普通服饰外零收集）</p>
+   
+
+</div>
+
+<div id="login_click" onClick="next()">
+  <a href="#">下一步</a> </div>
+</body>
+
+<div id="inoutbuttion">
+<div class="o" id="login_click" onClick="out()">
+  <a href="#">导出</a> </div>
+</body>
+<div class="i" id="login_click" onClick="inaa()">
+  <a href="#">导入</a> </div>
+</div>
+
+<p><input type="text" name="File" onChange="LoadFile()" id="File" value="hello"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+<script>
+	function JumpWeb(index){
+		var urls=['index.html','inputhub.html','multiply.html','instructions.html']
+		window.location.href=urls[index-1]
+	}
+var nodata=false
+var loadmode=false
+var Tec=[59,59,59,59,59,59,58]
+
+window.onload=function(){
+		try{
+	var file=localStorage.getItem("synnxjpzq")
+	if (file==null || file==""){throw('A')}
+	
+	 document.getElementById('File').style.display='none'
+	 document.getElementById('File').value=file
+
+		document.getElementById('newload1').style.display='none'
+		document.getElementById('newload2').style.display='none'
+
+	}catch(err){
+		document.getElementById('newload1').style.display='block'
+		document.getElementById('newload2').style.display='block'
+		 document.getElementById('File').style.display='none'
+		
+	    nodata=true
+	}
+}
+   function next(){
+		var temp,Wrong=false
+		for(var i=0;i<=2;i++){
+			if(document.getElementById('ViewMode_'+i.toString()).checked){temp=i+1}
+		}
+	   window.location.href = 'input.html?viewmode='+temp.toString()+"="+(document.getElementById('StarMode_1').checked?"1":"0")
+	   }
+	   
+	function LoadFile(){
+	   if(loadmode==false){return;}
+	   
+		var file=document.getElementById('File').value
+		document.getElementById('File').value=""
+		file=file.replace(/\#/g, "Z")
+		file=file.replace(/:/g, "A")
+		file=file.replace(/>/g, "H")
+		file=file.replace(/&/g, "B")
+		file=file.replace(/\*/g, "C")
+		file=file.replace(/!/g, "D")	
+		file=file.replace(/@/g, "E")
+		file=file.replace(/-/g, "G")
+		file=file.replace(/</g, "H")
+		file=file.replace(/\$/g, "I")
+
+		file=(file+"Aa").split("A")
+			
+			
+		var temp,subfile="",LN="",Wrong=false
+		for(var i=0;i<=file[0].length-2;i++){
+			temp=parseInt(file[0][i],36).toString(2)
+				if(temp.length<5){
+					var temp2=temp.length
+					for(var j=1;j<=5-temp2;j++){
+						temp="0"+temp
+					}
+				}
+			subfile=subfile+temp
+		}
+		temp=parseInt(file[0][file[0].length-1],36).toString(2)
+		if((DataSum-subfile.length)>5){
+			Wrong=true;
+		}
+				if(temp.length<(DataSum-subfile.length)){
+					var temp2=temp.length
+					for(var j=1;j<=(DataSum-subfile.length)-temp2;j++){
+						temp="0"+temp
+					}
+				}
+		subfile=subfile+temp
+	
+		if(file[1]!="a"){	
+
+			file[1]=file[1].replace(/I/g, "HH")
+			file[1]=file[1].replace(/H/g, "GG")
+			file[1]=file[1].replace(/G/g, "EE")
+			file[1]=file[1].replace(/E/g, "DD")
+			file[1]=file[1].replace(/D/g, "CC")
+			file[1]=file[1].replace(/C/g, "BB")
+			file[1]=file[1].replace(/B/g, "1Z")
+			for(var i=0;i<=file[1].length-1;i=i+2){
+				temp=file[1].substr(i,2)
+				if(file[1].substr(i+1,1)=="Z"){temp=temp.substr(0,1)}
+					temp=parseInt(temp,36).toString()
+					LN=LN+temp+"/"
+			}
+		}
+		
+		
+		
+		 if (subfile.length==DataSum && Wrong==false){
+			 localStorage.setItem("synnxjpzq", subfile)
+		    alert("加载衣柜数据成功！")
+		 }else{
+			alert("加载衣柜失败，粘贴格式有误，或数据版本过低！")
+		 }
+		 
+			if(LN!="" && LN.split("/").length>=9){
+				localStorage.setItem("synnxjxs", LN)
+				alert("加载学院&理念研究所数据成功！")
+			}else{
+				alert("加载学院&理念研究所数据失败，您的数据格式有误或复制疏漏！")
+			}
+		 
+		 
+		 location.reload()
+	}
+	
+	function inaa(){
+		document.getElementById('File').style.display='block'
+		document.getElementById('File').value=""
+		document.getElementById('inoutbuttion').style.display='none'
+		loadmode=true;
+		alert("请对着下方的细小文本框长按粘贴！")
+	}
+	
+	function out(){
+		try{
+				if(nodata){throw("err")}
+					var file=localStorage.getItem("synnxjpzq")
+					if (file==null || file==""){throw('A')}
+						var subfile=""
+						for(var i=0;i<=(file.length-(file.length%5)-1);i=i+5){
+							subfile=subfile+parseInt(file.substr(i,5),2).toString(36)
+						}
+						if((file.length%5)!=0){
+							subfile=subfile+parseInt(file.substr(i,(file.length%5)),2).toString(36)
+						}
+						subfile=subfile+loadMultiply()
+					document.getElementById('File').style.display='block'
+					document.getElementById('File').value=subfile
+					document.getElementById('inoutbuttion').style.display='none'
+					alert("导出衣柜数据"+(loadMultiply()!=""?"和加成数据":"(不包括学院和理念数据)")+"成功，请双击复制下方细小文本框的内容，注意不要漏字母！")		
+		}catch(err){alert("导出失败！")}
+	}
+	
+function loadMultiply(){//加载选项
+	var subfile=localStorage.getItem("synnxjxs")
+	var file=""
+	var temp=""
+	try{
+		if (subfile==null || subfile==""){throw('err')}
+		var sp=subfile.split("/")
+
+		for(var j=1;j<=7;j++){
+			temp=parseInt(sp[j-1]).toString(36)
+			if(temp.length==1){temp=temp+"Z"}
+			if (temp=="1Z"){temp="B"}
+			file=file+temp
+		}
+		for(var j=7;j<=sp.length-2;j++){
+			temp=parseInt(sp[j]).toString(36)
+			if(temp.length==1){temp=temp+"Z"}
+			if (temp=="1Z"){temp="B"}
+			file=file+temp
+		}
+		file=file.replace(/BB/g, "C")
+		file=file.replace(/CC/g, "D")
+		file=file.replace(/DD/g, "E")
+		file=file.replace(/EE/g, "G")
+		file=file.replace(/GG/g, "H")
+		file=file.replace(/HH/g, "I")
+		return "A"+file;
+	}catch(err){return ""}  
+}	
+</script>
+</body>
+</html>

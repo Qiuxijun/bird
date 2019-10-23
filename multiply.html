@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>忆海心阶配装器</title>
+<script src="multiply.js"></script>
+<script src="data.js"></script>
+<style type="text/css">
+.link {
+	color: #03F;
+	text-decoration:none;
+}
+.Button {
+	height: 40px;
+	width: 25%;
+	float: left;
+	text-align: center;
+	line-height: 40px;
+	background-repeat: repeat-x;
+	background-position: center;
+	top: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding: 0px;
+}
+#Button3{
+	background-image: url(image/button.png);	
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+	background-color: #EAF8FF;
+}
+hr.fgx {
+	border: 1px dashed #2E9FCC;
+}
+.Box {
+	margin-top: 0px;
+	width: 100%;
+	position: static;
+}
+.fgx2 {
+	position: relative;
+	border: 1px dashed #2E9FCC;
+	top: 8px;
+}
+.wb {
+	font-size: 80%;
+}
+p.t {
+	font-size: 140%;
+	font-weight : 800;
+	color: #1F4499;
+	text-align: center;
+}
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #EAF8FF;
+}
+hr.fgx {
+	border: 1px dashed #2E9FCC;
+}
+.settingA {
+	text-align: center;
+	font-size: 14px;
+	color: #900;
+}
+.settingAA {
+	text-align: center;
+	color: #900;
+}
+.settingB {
+	text-align: center;
+	color: #36F;
+}
+table{
+	border-spacing: 0;
+	font-family: "Microsoft YaHei", Sans-Serif;
+	color: #111111;
+	width: 80% ;   
+	text-align: center;
+	margin: auto;
+}
+
+td {
+	border-spacing: 0;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	height: 20px;
+}
+
+th {
+	border-spacing: 0;
+	height: 20px;
+	border-top-width: 1px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+}
+
+tr:nth-child(1) {
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	font-size: 100%;
+	font-weight : 700;
+	background-color: rgba(191, 219, 255, 0.9);
+}
+</style>
+</head>
+
+<body>
+<p class="t">忆海心阶配装器</p>
+<p align="center" class="wb"><a class="link" href="https://www.weibo.com/u/6573931053">@山药攻略组<img src="image/logo.jpg" width="40" height="40" /></a></p>
+<hr class="fgx">
+<div class="Box">
+  <div class="Button" id="Button1" onclick="JumpWeb(1)">心阶优解</div>
+  <div class="Button" id="Button2" onclick="JumpWeb(2)">衣柜数据</div>
+  <div class="Button" id="Button3" onclick="JumpWeb(3)">加成数据</div>
+  <div class="Button" id="Button4" onclick="JumpWeb(4)">使用说明</div>
+</div>
+<hr class="fgx2">
+<p class="settingAA">————学院加成———— </p>
+<p class="settingA"> 连衣裙：
+  <select id="Tec1" onchange="setMultiply()"></select>
+</p>
+<p class="settingA"> 发型：
+<select id="Tec2" onchange="setMultiply()">
+</select>
+</p>
+<p class="settingA"> 袜子：<select id="Tec3" onchange="setMultiply()"></select>
+</p>
+<p class="settingA">鞋子：
+<select id="Tec4" onchange="setMultiply()">
+</select>
+</p>
+<p class="settingA"> 饰品：<select id="Tec5" onchange="setMultiply()"></select>
+</p>
+<p class="settingA">外套：
+<select id="Tec6" onchange="setMultiply()">
+</select>
+</p>
+<p class="settingA"> 全部位：
+  <select id="Tec7" onchange="setMultiply()">
+  </select> 
+</p>
+<p class="settingB">————理念研究所———— </p>
+<p id="Buildp"></p>
+<p class="settingB"><span class="settingA">*以上数据均自动保存</span></p>
+<p class="settingB"><span class="settingA">*点击套装名称可查看理念部件，可能会疏忽某次更新的内容，欢迎纠错</span></p>
+</body>
+<script>
+ window.onload=function(){
+	for(var j=59;j>=1;j--){
+		for(var i=1;i<=6;i++){
+			document.getElementById("Tec"+i.toString()).options.add(new Option(TecStr[Math.floor(j/10)]+(j%10)+"级", j))
+		}
+		if(j<59 && j>18){
+			document.getElementById("Tec7").options.add(new Option(TecStr2[Math.floor(j/10)]+(j==19?"":(j%10)+"级"), j))
+		}
+			if((j%10)==1){j=j-1}
+	}
+	 	  var ihtml='<table border="1" cellspacing="0"><tr><th>套装名字</th><th>提升等级</th><th>突破等级</th></tr>'
+		  var c='234, 242, 250';
+		  var xyd=['稀有','非凡','闪耀']
+		for(var j=3;j>=1;j--){
+			ihtml=ihtml+'<tr style="background-color: rgba(191, 219, 255, 0.9)"><th></th><th>'+xyd[j-1]+'</th><th></th></tr>'
+			for(var i=1;i<=BuildSum;i++){
+				if (Build[i][0]==j){
+					if(c=='234, 242, 250'){c='219, 229, 248'}else{c='234, 242, 250'}
+					ihtml=ihtml+'<tr><td style="background: rgba('+c+', 0.5)" onclick="ShowBuild('+i.toString()+')">'+Build[i][1]+'</td><td style="background: rgba('+c+', 0.5)"> <select onchange="setMultiply()" id="ResLevel'+i.toString()+'"></select></td><td style="background: rgba('+c+', 0.5)" id="Power'+i.toString()+'"></td></tr>'
+				}
+			}
+	    }
+	   document.getElementById("Buildp").innerHTML=ihtml+"</table>"
+	   for(var i=1;i<=BuildSum;i++){
+				for(var j=1;j<=80;j++){document.getElementById("ResLevel"+i.toString()).options.add(new Option(j, j))}
+	   }
+	   	   	   	 loadMultiply(true)
+	   for(var i=1;i<=BuildSum;i++){
+				PowerClicks(i,0)
+	   }
+ }
+ 
+	function JumpWeb(index){
+		var urls=['index.html','inputhub.html','multiply.html','instructions.html']
+		window.location.href=urls[index-1]
+	}
+</script>
+
+
+
+
+
+</body>
+</html>
