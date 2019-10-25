@@ -96,7 +96,7 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 		resultusing={1:[],2:[],3:[],4:[],5:[]};
 		tag1=parseInt(document.getElementById("Tag1").value)
 		tag2=parseInt(document.getElementById("Tag2").value)
-			if(document.getElementById("Level").value==9){tag2=0}
+			if(document.getElementById("Level").value==9){tag2=-1}
 		SetData()
 		//以上是初始化数据
 		try{
@@ -107,12 +107,12 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 				Set(parseInt(document.getElementById("Power").value))
 				Solve(1,[0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]);//核心递归
 				sumscore=sumscore+resultscore;//计算总分
-				document.getElementById("Result"+Runtimes.toString()).innerHTML="第"+Runtimes.toString()+"次搭配（"+resultscore.toString()+"分）"+((Runtimes!=RunTime && parseInt(document.getElementById("Level").value)<8)?'<button onclick="NextLevel('+Runtimes.toString()+')">下一关</button>':'')+ihtml+HTMLresult(resultusing[Runtimes])+"</table>"//HTML
+				document.getElementById("Result"+Runtimes.toString()).innerHTML="第"+Runtimes.toString()+"次搭配（"+resultscore.toString()+"分，Tag："+CheckTagSum(resultusing[Runtimes],tag1)+"+"+CheckTagSum(resultusing[Runtimes],tag2)+"）"+((Runtimes!=RunTime && parseInt(document.getElementById("Level").value)<8)?'<button onclick="NextLevel('+Runtimes.toString()+')">下一关</button>':'')+ihtml+HTMLresult(resultusing[Runtimes])+"</table>"//HTML
 					for(var i=1;i<=12;i++){
 						if(resultusing[Runtimes][i]!=-1){Cloth[resultusing[Runtimes][i]]=0}
 					}	
 			}
-			document.getElementById("Result").innerHTML="主Tag："+Tag[tag1]+"，副Tag："+Tag[tag2]+"。总搭配分："+Math.round(sumscore).toString()
+			document.getElementById("Result").innerHTML="主Tag："+Tag[tag1]+"，副Tag："+Tag[(tag2<0?0:tag2)]+"。总搭配分："+Math.round(sumscore).toString()
 			document.getElementById("exp").innerHTML="点击服饰名字可查看详情"
 			Data=JSON.parse(JSON.stringify(temp1))
 			Cloth=temp2.concat()
@@ -120,10 +120,12 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 			alert("计算完成！"+(tag1==tag2?"\n温馨提醒：您使用了两个一样的Tag！":""))
 		}catch(err){alert("计算好像出了点问题，请反馈以下消息："+err.message)}
 		}
-		
+	
 	function Solve(set,using){
 		var level=parseInt(document.getElementById("Level").value)
 		var sub=SubArr(using,set-1)
+		var tag1sumchecked=CheckTagSum(sub,tag1)
+		var tag2sumchecked=CheckTagSum(sub,tag2)
 		
 		if(set==13){//递归边界，返回搭配得分
 			    if (getscore(using)>resultscore){
@@ -131,17 +133,29 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 				   resultusing[Runtimes]=using.concat()
 			    }
 			return;	
-		}		
-
+		}
+		
 			using[set]=-1//清理传址传回来的值
-			
-			for(var i=0; i<=All[SetIndex[set]].length-1;i++){
-				if(CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){
-					//最高分条件、互斥条件、部位可用条件
-					using[set]=All[SetIndex[set]][i];
-					break;
-				}	
+			if((tag1sumchecked>=(LevelA[level].length-1) || tag2sumchecked>=(LevelB[level].length-1)) && document.getElementById("Check2").checked==true){
+				for(var i=0; i<=All[SetIndex[set]].length-1;i++){
+					var tag1checked=CheckTag(All[SetIndex[set]][i],tag1)
+					var tag2checked=CheckTag(All[SetIndex[set]][i],tag2)
+					if((tag1checked==false && tag2checked==false) && CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){
+						//无tag、最高分条件、互斥条件、部位可用条件
+						using[set]=All[SetIndex[set]][i];
+						break;
+					}	
+				}
+			}else{
+				for(var i=0; i<=All[SetIndex[set]].length-1;i++){
+					if(CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){
+						//最高分条件、互斥条件、部位可用条件
+						using[set]=All[SetIndex[set]][i];
+						break;
+					}	
+				}
 			}
+			
 			Solve(set+(set==1?3:1),using)
 				if(using[set]==482){//给少年时光这条裤子开后门
 					using[set]=All[SetIndex[set]][i+1];
@@ -149,9 +163,11 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 				}
 			
 			using[set]=-1
-			if(CheckTagSum(sub,tag1)<(LevelA[level].length-1)){
+			if(tag1sumchecked<(LevelA[level].length-1)){
 				for(var i=0; i<=All[SetIndex[set]].length-1;i++){
-					if ((CheckTag(All[SetIndex[set]][i],tag1) && CheckTag(All[SetIndex[set]][i],tag2)==false) && CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){//单Tag1最高分条件、Tag1数量未满足条件、互斥条件、部位可用条件
+					var tag1checked=CheckTag(All[SetIndex[set]][i],tag1)
+					var tag2checked=CheckTag(All[SetIndex[set]][i],tag2)
+					if ((tag1checked && tag2checked==false) && CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){//单Tag1最高分条件、Tag1数量未满足条件、互斥条件、部位可用条件
 						using[set]=All[SetIndex[set]][i];
 						break;
 					}	
@@ -160,9 +176,11 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 			}
 			
 			using[set]=-1
-			if(CheckTagSum(sub,tag2)<(LevelB[level].length-1)){
+			if(tag2sumchecked<(LevelB[level].length-1)){
 				for(var i=0; i<=All[SetIndex[set]].length-1;i++){
-					if ((CheckTag(All[SetIndex[set]][i],tag1)==false && CheckTag(All[SetIndex[set]][i],tag2)) && CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){//单Tag2最高分条件、Tag2数量未满足条件、互斥条件、部位可用条件
+					var tag1checked=CheckTag(All[SetIndex[set]][i],tag1)
+					var tag2checked=CheckTag(All[SetIndex[set]][i],tag2)
+					if ((tag1checked==false && tag2checked) && CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){//单Tag2最高分条件、Tag2数量未满足条件、互斥条件、部位可用条件
 						using[set]=All[SetIndex[set]][i];
 					break;
 					}	
@@ -171,14 +189,17 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 			}
 			
 				using[set]=-1
+			if((tag2sumchecked<LevelB[level].length-1) || (tag1sumchecked<(LevelA[level].length-1))){
 				for(var i=0; i<=All[SetIndex[set]].length-1;i++){
-					if ((CheckTag(All[SetIndex[set]][i],tag1) && CheckTag(All[SetIndex[set]][i],tag2)) && CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){//双Tag最高分条件、互斥条件、部位可用条件
+					var tag1checked=CheckTag(All[SetIndex[set]][i],tag1)
+					var tag2checked=CheckTag(All[SetIndex[set]][i],tag2)
+					if ((tag1checked && tag2checked) && CheckMutex(All[SetIndex[set]][i],sub) && Canuse(All[SetIndex[set]][i],sub)){//双Tag最高分条件、互斥条件、部位可用条件
 						using[set]=All[SetIndex[set]][i];
 						break;
 					}	
 				}	
 				if(using[set]!=-1 || set==12){Solve(set+(set==1?3:1),using)}
-			
+			}
 			
 			if(set==1){//不使用连衣裙，改为使用上衣下装
 				using[set]=-1
@@ -219,7 +240,7 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
   
 	function CheckTag(index,tag){//检查是否符合Tag，符合返回true，不符合返回false
 	   if (index<0){return false}
-	   if((Data[index][8]==tag)||(Data[index][10]==tag)){return true;}else{if(tag<=0){return true;}else{return false;}}
+	   if((Data[index][8]==tag)||(Data[index][10]==tag)){return true;}else{if(tag==0){return true;}else{return false;}}
     }function CheckTagSum(arr,tag){
 		var temp=0
 		for(var j=1;j<=arr.length-1;j++){if(CheckTag(arr[j],tag)){temp=temp+(j==1?2:1)}} 

@@ -170,7 +170,7 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 	
 	
 	if(viewmode==3){
-		var Strlist=['【原色】<button onclick="SetAll(0)">已集齐</button>','【复苏＆重构】<button onclick="SetAll(1)">已复苏</button>','【散件】<button onclick="SetAll(2)">全收集</button><font size=1>（若您没有这套理念，请设散件全收集）</font>'],listsum=0,index
+		var Strlist=['【原色】<button onclick="SetAll(0,1)">已集齐</button>','【复苏＆重构】<button onclick="SetAll(1,1)">已复苏</button><button onclick="SetAll(1,0)">未培养</button>','【散件】<button onclick="SetAll(2,1)">全收集</button><font size=1>(若没有这套理念，请设散件全收集)</font>'],listsum=0,index
 		var iHTML="",tz=parseInt(document.getElementById("sx").value)
 		if(isNaN(tz)){tz=-1}
 		if(tz>0){
@@ -179,7 +179,7 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 				for(var i=0;i<=Build[tz][4+j].length-1;i++){
 					if(i%4==0){
 						listsum=listsum+1
-						iHTML=iHTML+(i==0?'':'</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>')+'<p>'
+						iHTML=iHTML+(i==0?'':'</p>')+'<p>'
 					}
 					index=Build[tz][4+j][i]
 					iHTML=iHTML+'<img style="opacity:'+((Cloth[index]==1 || index==-1)?"1":"0.2")+'" src="http://pztcb8nht.bkt.clouddn.com\\'+index.toString()+'.png" width="60" height="72" class="Pic" onclick=set('+index.toString()+') id="Pic'+index.toString()+'"/>'
@@ -190,7 +190,7 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 			iHTML="<p>无理念套装的服饰中有220件普通服饰和12件稀有服饰。我们推荐您将它们全部设置为已拥有，以节约录入时间。别担心，在以后的计算过程中，若您发现某件服饰是您未拥有的，您可以当场调整。如果您有强迫症，稍后您可以前往<a href='input.html?viewmode=2=1'>自由搭配衣柜</a>页面，按顺序核对各部位服饰的数量。</p><p><button onclick='SetNone()'>点击设置</button></p>"
 		}
 		if(tz<0){
-			iHTML="<p>请打开理念研究所，按配装器顺序点开套装，然后点开左上角的<font color='blue'>部件一览</font>的放大镜图标按钮。</p><p>每一套的部件一览在配装器的位置顺序与游戏内是完全一致的！您可以盯着游戏内图标的左下角的<font color='red'>“已拥有”</font>来点击图片进行录入，同时配合<font color='blue'>按钮</font>进行批量录入。</p><p>录入过程中，请<font color='red'>忽略妆容</font>！</p><p>配装器页面里，图片透明表示未拥有，图片不透明则表示您已拥有。</p><p>部分图标我们暂未收录，后续会进行维护，敬请谅解。</p>"
+			iHTML="<p>请打开理念研究所，按配装器顺序点开套装，然后点开左上角的<font color='blue'>部件一览</font>的放大镜图标按钮。</p><p>每一套的部件一览在配装器的位置顺序与游戏内是完全一致的！您可以盯着游戏内图标的左下角的<font color='red'>“已拥有”</font>来点击图片进行录入，同时配合<font color='blue'>按钮</font>进行批量录入。</p><p>录入过程中，请<font color='red'>忽略妆容</font>！</p><p>配装器页面里，图片透明表示未拥有，图片不透明则表示您已拥有。</p><p>如果您发现您<font color='red'>缺少</font>某套理念，说明您没有收集这套服装里的任何一件配件。这种情况下，我们建议您将散件设为全收集，然后再跳过这一套套装。</p><p>部分图标我们暂未收录，后续会进行维护，敬请谅解。</p>"
 		}
 			document.getElementById("ShowType3").innerHTML=iHTML
 	}//第三种浏览模式
@@ -199,7 +199,6 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
  
  
  function set(index){
-	 console.log(index)
 	var temp=0,listsum=0;
 	if(index<0){return;}
 	Cloth[index]=1-Cloth[index]
@@ -293,10 +292,10 @@ function TapChange(lr){
 	
 }
 
-function SetAll(index){
+function SetAll(index,state){
 	var tz=parseInt(document.getElementById("sx").value)
 				for(var m=0;m<=Build[tz][4+index].length-1;m++){
-					if(Build[tz][4+index][m]!=-1){Cloth[Build[tz][4+index][m]]=1}
+					if(Build[tz][4+index][m]!=-1){Cloth[Build[tz][4+index][m]]=state}
 				}
 	Show(0,0,0)
 	Save()
