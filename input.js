@@ -246,6 +246,7 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 	}
 	
 	  }catch(err){
+		  if(document.getElementById("sx")==null){return;}
 	 for(var i=0;i<=(DataSum-1);i++){
 		 Cloth[i]=newdata
 		 if(Data[i][1]==2){Cloth[i]=1}
