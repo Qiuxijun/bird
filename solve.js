@@ -107,7 +107,7 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 				Set(parseInt(document.getElementById("Power").value))
 				Solve(1,[0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]);//核心递归
 				sumscore=sumscore+resultscore;//计算总分
-				document.getElementById("Result"+Runtimes.toString()).innerHTML="第"+Runtimes.toString()+"次搭配（"+resultscore.toString()+"分，Tag："+CheckTagSum(resultusing[Runtimes],tag1)+"+"+CheckTagSum(resultusing[Runtimes],tag2)+"）"+((Runtimes!=RunTime && parseInt(document.getElementById("Level").value)<8)?'<button onclick="NextLevel('+Runtimes.toString()+')">下一关</button>':'')+ihtml+HTMLresult(resultusing[Runtimes])+"</table>"//HTML
+				document.getElementById("Result"+Runtimes.toString()).innerHTML="第"+Runtimes.toString()+"次搭配（"+resultscore.toString()+"分，Tag："+CheckTagSum(resultusing[Runtimes],tag1)+"+"+CheckTagSum(resultusing[Runtimes],tag2)+"）"+((Runtimes!=RunTime && parseInt(document.getElementById("Level").value)<8)?'<button onclick="NextLevel('+Runtimes.toString()+')">下一关</button>':'')+ihtml+HTMLresult(resultusing[Runtimes],1)+"<td style='background: rgba(195,221,255,0.4)'>美甲</td><td style='background: rgba(195,221,255,0.4)'>请记得带上美甲！</td><td style='background: rgba(195,221,255,0.4)'>：）</td></table>"//HTML
 					for(var i=1;i<=12;i++){
 						if(resultusing[Runtimes][i]!=-1){Cloth[resultusing[Runtimes][i]]=0}
 					}	
@@ -133,6 +133,10 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 				   resultusing[Runtimes]=using.concat()
 			    }
 			return;	
+		}
+		
+		if(set==12){
+			//console.log("a")
 		}
 		
 			using[set]=-1//清理传址传回来的值
@@ -207,7 +211,7 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 			}
 	}
    
-	function HTMLresult(arr){//跑HTML格式
+	function HTMLresult(arr,mode){//跑HTML格式
 		var s="",c,listcount=0
 		var xyd=[0,0,"普通","稀有","非凡","闪耀"]
 		var sx=["典雅","清新","甜美","性感","帅气"]
@@ -216,7 +220,11 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 			if (arr[IndexToType[j]]!=-1){
 				listcount=listcount+1
 				if(listcount%2==1){c='219, 229, 248'}else{c='234, 242, 250'}
-				s=s+'<tr style="background: rgba('+c+', 0.5)" id="list'+Runtimes.toString()+'_'+Data[arr[IndexToType[j]]][2]+'"><td style="background: rgba('+c+', 0.5)">'+Setstr[Data[arr[IndexToType[j]]][2]][0]+'</td><td style="background: rgba('+c+', 0.5)" onclick="alert(\''+Data[arr[IndexToType[j]]][0]+'：'+xyd[Data[arr[IndexToType[j]]][1]]+Setstr[Data[arr[IndexToType[j]]][2]][0]+'，'+sx[parseInt(document.getElementById("Power").value)-1]+'：'+Data[arr[IndexToType[j]]][parseInt(document.getElementById("Power").value)+2].toString()+'，Tag：'+Tag[Data[arr[IndexToType[j]]][8]]+'、'+Tag[Data[arr[IndexToType[j]]][10]]+'，所属理念：'+GetBuild(arr[IndexToType[j]])+'。\')">'+Data[arr[IndexToType[j]]][0]+' ('+Data[arr[IndexToType[j]]][parseInt(document.getElementById("Power").value)+2].toString()+')</td><td style="background: rgba('+c+', 0.5)"><button onclick="ReRun('+arr[IndexToType[j]].toString()+')">Re</button></td></tr>'
+					if(mode==1){
+						s=s+'<tr style="background: rgba('+c+', 0.5)" id="list'+Runtimes.toString()+'_'+Data[arr[IndexToType[j]]][2]+'"><td style="background: rgba('+c+', 0.5)">'+Setstr[Data[arr[IndexToType[j]]][2]][0]+'</td><td style="background: rgba('+c+', 0.5)" onclick="alert(\''+Data[arr[IndexToType[j]]][0]+'：'+xyd[Data[arr[IndexToType[j]]][1]]+Setstr[Data[arr[IndexToType[j]]][2]][0]+'，'+sx[parseInt(document.getElementById("Power").value)-1]+'：'+Data[arr[IndexToType[j]]][parseInt(document.getElementById("Power").value)+2].toString()+'，Tag：'+Tag[Data[arr[IndexToType[j]]][8]]+'、'+Tag[Data[arr[IndexToType[j]]][10]]+'，所属理念：'+GetBuild(arr[IndexToType[j]])+'。\')">'+Data[arr[IndexToType[j]]][0]+' ('+Data[arr[IndexToType[j]]][parseInt(document.getElementById("Power").value)+2].toString()+')</td><td style="background: rgba('+c+', 0.5)"><button onclick="ReRun('+arr[IndexToType[j]].toString()+')">Re</button></td></tr>'
+					}else{
+						s=s+'<tr style="background: rgba('+c+', 0.5)"><td style="background: rgba('+c+', 0.5)">'+Setstr[Data[arr[IndexToType[j]]][2]][0]+'</td><td style="background: rgba('+c+', 0.5)" onclick="">'+Data[arr[IndexToType[j]]][0]+'</td><td style="background: rgba('+c+', 0.5)">'+Data[arr[IndexToType[j]]][parseInt(document.getElementById("Power").value)+2].toString()+'</td></tr>'
+					}
 			}
 		} 
 		return s;
@@ -255,7 +263,14 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 		return true;
 	} function MutexCheck(a,b){
 		if(typeof(Mutex[a])=='undefined' && typeof(Mutex[b])=='undefined'){return false}
-		if(typeof(Mutex[a])!='undefined'){if(Mutex[a].indexOf(b)>=0){return true}}else{if(Mutex[b].indexOf(a)>=0){return true}}
+		
+		if(typeof(Mutex[a])!='undefined'){
+			if(Mutex[a].indexOf(b)>=0){return true}
+		}
+		
+		if(typeof(Mutex[b])!='undefined'){
+			if(Mutex[b].indexOf(a)>=0){return true}
+		}
 		return false
 	}	
    
@@ -363,3 +378,11 @@ var SetIndex=[0,2,4,5,1,7,6,8,8,8,8,8,3]//十二位置按分数比重排序，�
 	
    //如果在看这段文字的您有更好的算法，请与山药主页君联系~
 
+	function SetAllHtml(){
+		var ihtml='<table border="1" cellspacing="0"><tr><th>部位</th><th>名称</th><th>分数</th></tr>'
+		tag1=parseInt(document.getElementById("Tag1").value)
+		tag2=parseInt(document.getElementById("Tag2").value)
+		for(Runtimes=1;Runtimes<=5;Runtimes++){
+document.getElementById("Result"+Runtimes.toString()).innerHTML="<p>第"+Runtimes.toString()+"次搭配："+resultscore.toString()+"分</p><p>"+Tag[tag1]+"："+CheckTagSum(resultusing[Runtimes],tag1)+"</p><p>"+Tag[tag2]+"："+CheckTagSum(resultusing[Runtimes],tag2)+"</p>"+ihtml+HTMLresult(resultusing[Runtimes],2)+"<td style='background: rgba(195,221,255,0.4)'>美甲</td><td style='background: rgba(195,221,255,0.4)'>请记得带上美甲！</td><td style='background: rgba(195,221,255,0.4)'>：）</td></table>"//HTML
+		}
+	}

@@ -153,8 +153,14 @@ hr.fgx {
     3、按自由搭配输入</p>
   <p class="tip">使用方法：进入游戏——打开自由搭配——筛选属性——依次点开头发至饰品项，按顺序对照查看服饰并录入数据。注：不管您的收集度如何，此方法适合<font color="red">从零</font>图鉴开始录入，使用前请先填写学院和理念数据。</p>
    <p>&nbsp;</p>
-
-
+ <input type="radio" class="Opition" name="ViewMode" value="5" id="ViewMode_4">
+    4、按名字搜索输入</p>
+  <p class="tip">适合用于少量获取新衣服时更新衣柜</p>
+<p>&nbsp;</p>
+ <input type="radio" class="Opition" name="ViewMode" value="4" id="ViewMode_3">
+    5、按版本更新输入</p>
+  <p class="tip">适合用于查看数据库的更新内容</p>
+<p>&nbsp;</p>
 
    <p id="newload1"> <input type="radio" class="Opition2" name="ViewMode2" value="1" id="StarMode_1" checked="true">
     我的收集度较高（初始默认全收集）</p>
@@ -219,7 +225,7 @@ window.onload=function(){
 }
    function next(){
 		var temp,Wrong=false
-		for(var i=0;i<=2;i++){
+		for(var i=0;i<=4;i++){
 			if(document.getElementById('ViewMode_'+i.toString()).checked){temp=i+1}
 		}
 	   window.location.href = 'input.html?viewmode='+temp.toString()+"="+(document.getElementById('StarMode_1').checked?"1":"0")
@@ -259,7 +265,7 @@ window.onload=function(){
 		if((DataSum-subfile.length)>5){
 			Wrong=true;
 		}
-				if(temp.length<(DataSum-subfile.length)){
+				if(temp.length<((DataSum-subfile.length)>5?5:(DataSum-subfile.length))){
 					var temp2=temp.length
 					for(var j=1;j<=(DataSum-subfile.length)-temp2;j++){
 						temp="0"+temp
@@ -290,7 +296,16 @@ window.onload=function(){
 			 localStorage.setItem("synnxjpzq", subfile)
 		    alert("加载衣柜数据成功！")
 		 }else{
-			alert("加载衣柜失败，粘贴格式有误，或数据版本过低！")
+			if(typeof(version[subfile.length])!='undefined'){
+				var temp2=subfile.length
+			  for(var i=1;i<=(DataSum-temp2);i++){
+				  subfile=subfile+"0"
+			  }
+			   localStorage.setItem("synnxjpzq", subfile)
+			  alert("【提醒】您刚刚导入的衣柜数据版本为："+version[temp2]+"。\n最新版本："+version[DataSum]+"。\n已自动帮您转换成最新版本的衣柜数据，上次更新至今的所有新衣服均默认为未拥有。")
+			}else{
+			 alert("加载衣柜失败，粘贴格式有误！")
+			}
 		 }
 		 
 			if(LN!="" && LN.split("/").length>=9){

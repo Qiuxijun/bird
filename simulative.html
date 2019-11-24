@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>忆海心阶配装器</title>
+<script src="multiply.js"></script>
+<script src="data.js"></script>
+<script src="solve.js"></script>
+<style type="text/css">
+.link {
+	color: #03F;
+	text-decoration:none;
+}
+.simulative {
+	width: 40%;
+	padding-left: 50px;
+}
+.Button {
+	height: 40px;
+	width: 20%;
+	float: left;
+	text-align: center;
+	line-height: 40px;
+	background-repeat: repeat-x;
+	background-position: center;
+	top: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding: 0px;
+}
+#Button5{
+	background-image: url(image/button.png);	
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+	background-color: #EAF8FF;
+}
+hr.fgx {
+	border: 1px dashed #2E9FCC;
+}
+.Box {
+	margin-top: 0px;
+	width: 100%;
+	position: static;
+}
+.fgx2 {
+	position: relative;
+	border: 1px dashed #2E9FCC;
+	top: 8px;
+}
+.wb {
+	font-size: 80%;
+}
+p.t {
+	font-size: 140%;
+	font-weight : 800;
+	color: #1F4499;
+	text-align: center;
+}
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #EAF8FF;
+}
+hr.fgx {
+	border: 1px dashed #2E9FCC;
+}
+
+.input {
+	text-align: center;
+	color: #00F;
+	font-family: "微软雅黑";
+}
+#explain {
+	font-size: 17px;
+}
+.input2 {
+	text-align: center;
+	color: #900;
+	font-size: 14px;
+}
+.result {
+	text-align: center;
+}
+table{
+	border-spacing: 0;
+	font-family: "Microsoft YaHei", Sans-Serif;
+	color: #111111;
+	width: 80% ;   
+	text-align: center;
+	margin: auto;
+}
+
+td {
+	border-spacing: 0;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	height: 20px;
+}
+
+th {
+	border-spacing: 0;
+	height: 20px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+}
+
+
+tr:nth-child(1) {
+	font-size: 100%;
+	font-weight : 700;
+	background-color: rgba(191, 219, 255, 0.9);
+}
+.clothes {
+	float: right;
+}
+</style>
+</head>
+
+<body>
+<p class="t">忆海心阶配装器</p>
+<p align="center" class="wb"><a class="link" href="https://www.weibo.com/u/6573931053">@山药攻略组<img src="image/logo.jpg" width="40" height="40" /></a></p>
+<hr class="fgx">
+
+<div class="Box">
+  <div class="Button" id="Button1" onclick="JumpWeb(1)">心阶优解</div>
+  <div class="Button" id="Button5" onclick="JumpWeb(5)">模拟搭配</div>
+  <div class="Button" id="Button2" onclick="JumpWeb(2)">衣柜数据</div>
+  <div class="Button" id="Button3" onclick="JumpWeb(3)">加成数据</div>
+  <div class="Button" id="Button4" onclick="JumpWeb(4)">使用说明</div>
+</div>
+<hr class="fgx2">
+<p class="input">关卡： <select id="Level" onchange="Savaini()">
+  <option value="1">心境I</option>
+  <option value="2">心境II</option>
+  <option value="3">心境III</option>
+  <option value="4">心境IV</option>
+  <option value="5">心境V</option>
+  <option value="6">心境VI</option>
+  <option value="7">心境VII</option>
+  <option value="8">真我之境</option>
+  <option value="9">繁中Tag竞技场</option>
+</select>
+</p>
+<p class="input" onchange="Savaini()">本周属性
+  <select id="Power" >
+    <option value="1">典雅</option>
+    <option value="2">清新</option>
+    <option value="3">甜美</option>
+    <option value="4">性感</option>
+    <option value="5">帅气</option>
+  </select>
+主Tag 
+<select id="Tag1" onchange="Savaini()">
+
+</select>
+ 可选Tag：<select id="Tag2" onchange="Savaini()">
+  </select>
+<div class="clothes">啊啊啊啊啊啊啊啊啊啊
+</div>
+
+<div class="simulative">
+	<div id="Result1">1</div>
+    <div id="Result2">2</div>
+    <div id="Result3">3</div>
+    <div id="Result4">4</div>
+    <div id="Result5">5</div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+<script>
+	function Savaini(){
+		var subfile=document.getElementById("Level").value+"/"+document.getElementById("Power").value+"/"+document.getElementById("Tag1").value+"/"+document.getElementById("Tag2").value+"/"
+		localStorage.setItem("synnxjpzqini", subfile)
+		resultusing={1:[0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],2:[0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],3:[0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],4:[0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],5:[0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]};
+		SetAllHtml()
+	}
+ 
+	function JumpWeb(index){
+		var urls=['index.html','inputhub.html','multiply.html','instructions.html']
+		window.location.href=urls[index-1]
+	}
+</script>
+
+
+
+
+
+</body>
+</html>

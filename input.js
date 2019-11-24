@@ -15,8 +15,11 @@
 	    var div = document.getElementById('PowerButton'+i.toString());
 		div.innerHTML="<div class=\"Tip\" id=\"Tip"+i.toString()+"\"></div>"
 	  }
-		loadMultiply(false)
-		SetData()
+	  
+	  if (viewmode!=6){
+	loadMultiply(false)
+		SetData()}
+		
 	 TypeClick(1)
 	 if (viewmode>=2){
 		 for(var i=0;i<=document.getElementsByClassName("ViewMode").length-1;i++){
@@ -37,6 +40,27 @@
 		 
 	 } 
 	 
+	 if( viewmode==4){
+		 for(var i=0;i<=document.getElementsByClassName("ViewMode2").length-1;i++){
+		   document.getElementsByClassName("ViewMode2")[i].style.display='none'
+		 }
+	 }
+	 
+	 if( viewmode==5){
+		 for(var i=0;i<=document.getElementsByClassName("ViewMode2").length-1;i++){
+		   document.getElementsByClassName("ViewMode2")[i].style.display='none'
+		 }
+		 for(var i=0;i<=document.getElementsByClassName("touch").length-1;i++){
+		   document.getElementsByClassName("touch")[i].style.display='none'
+		 }	 
+	 }
+
+	 if( viewmode==6){
+		 for(var i=0;i<=document.getElementsByClassName("Box").length-1;i++){
+		   document.getElementsByClassName("Box")[i].style.display='none'
+		 }
+		 document.getElementById("fgx1").style.display='none'
+	 } 
 	 
  }
  
@@ -113,12 +137,12 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 	  var TypetoType=[1,2,3,4,5,6,7,8.1,8.2,9,10,14.3,11,12,13,14]
 	  type=TypetoType[type-1]
 	  
-	if(viewmode==2){ 
+	if(viewmode==2 || viewmode==6){ 
 	  	power=document.getElementById("sx").value
 		if(power==''){power=3}
 	}
 	  
-	if(viewmode==1){
+	if(viewmode==1 ){
 		var ihtml='<table border="1" cellspacing="0"><tr><th>服饰清单</th><th>是否拥有</th></tr>',listsum=0,c='234, 242, 250'
 			for(var i=0;i<=DataSum-1;i++){
 			   if (Data[i][2]>14 && Data[i][2]!=14.3){Data[i][2]=14}
@@ -131,7 +155,7 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 		document.getElementById("ShowList").innerHTML=(listsum>0?"":"没有")+Rankstr[5-Rank] +'品质、'	+Powerstr[Power-3]+'属性的'+Typestr[Type-1]+(listsum>0?ihtml:"")
 	}//第一种浏览模式
 
-	if(viewmode==2){
+	if(viewmode==2 || viewmode==6){
 		document.getElementById("ShowList").innerHTML='数据加载中，请稍候……<select onchange="Show(Type,Rank,1)" id="sx"></select>'
 		templist=[];
 		var ihtml='<table border="1" cellspacing="0"><tr><th>服饰清单</th><th>是否拥有</th></tr>',listsum=0,c='234, 242, 250'
@@ -162,7 +186,10 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 				temp=temp+Cloth[templist[i]]
 				ihtml=ihtml+'<tr onclick=\"set('+templist[i].toString()+')\"><td style="background: rgba('+c+', 0.5)">'+Data[templist[i]][0]+(Data[templist[i]][0].substr(Data[templist[i]][0].length-1,1)!="*"?' ('+Data[templist[i]][power].toString()+Powerstr[power-3]+')':"")+'</td><td style="background: rgba('+c+', 0.5)" id=\"id'+templist[i].toString()+'\"><img src="image/'+(Cloth[templist[i]]==1?"g":"r")+'.png" width="32" height="40" /></td></tr>'
 			}
-				document.getElementById("ShowList").innerHTML='所有'+Typestr[Type-1]+'(已收集'+temp.toString()+"/"+listsum.toString()+')，按<select onchange="Show(Type,Rank,1)" id="sx"></select>排序'+ihtml+"</table>"
+				document.getElementById("ShowList").innerHTML=(viewmode!=6?'所有'+Typestr[Type-1]+'(已收集'+temp.toString()+"/"+listsum.toString()+')':"顶配分析")+'，按<select onchange="Show(Type,Rank,1)" id="sx"></select>排序'+(viewmode!=6?"":'<hr class="fgx2"><p>&nbsp;</p>')+ihtml+"</table>"
+				
+				
+				
 				for(var i=0; i<=4;i++){document.getElementById("sx").options.add(new Option(Powerstr[i], i+3))}
 				
 				document.getElementById("sx").options[power-3].selected=true;
@@ -187,13 +214,118 @@ document.getElementById('Tip'+i.toString()).style.backgroundImage = 'url(image/T
 				iHTML=iHTML+'</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>'
 			}
 		}else{
-			iHTML="<p>无理念套装的服饰中有220件普通服饰和12件稀有服饰。我们推荐您将它们全部设置为已拥有，以节约录入时间。别担心，在以后的计算过程中，若您发现某件服饰是您未拥有的，您可以当场调整。如果您有强迫症，稍后您可以前往<a href='input.html?viewmode=2=1'>自由搭配衣柜</a>页面，按顺序核对各部位服饰的数量。</p><p><button onclick='SetNone()'>点击设置</button></p>"
+			var xydSum=[0,0,0,0]
+			for(var i=0;i<=DataSum-1;i++){
+			   if(SearchBuild(i)==0){xydSum[Data[i][1]-2]++}
+			   }
+			xydSum[2]=0
+			
+			iHTML="<p>无理念套装的服饰中有"+(xydSum[0]==0?"":xydSum[0]+"件普通服饰")+(xydSum[1]==0?"":"和"+xydSum[1]+"件稀有服饰")+(xydSum[2]==0?"":"和"+xydSum[2]+"件非凡服饰")+"。我们推荐您将它们全部设置为已拥有，以节约录入时间。别担心，在以后的计算过程中，若您发现某件服饰是您未拥有的，您可以当场调整。如果您有强迫症，稍后您可以前往<a href='input.html?viewmode=2=1'>自由搭配衣柜</a>页面，按顺序核对各部位服饰的数量。</p><p><button onclick='SetNone()'>点击设置</button></p>"
 		}
 		if(tz<0){
 			iHTML="<p>请打开理念研究所，按配装器顺序点开套装，然后点开左上角的<font color='blue'>部件一览</font>的放大镜图标按钮。</p><p>每一套的部件一览在配装器的位置顺序与游戏内是完全一致的！您可以盯着游戏内图标的左下角的<font color='red'>“已拥有”</font>来点击图片进行录入，同时配合<font color='blue'>按钮</font>进行批量录入。</p><p>录入过程中，请<font color='red'>忽略妆容</font>！</p><p>配装器页面里，图片透明表示未拥有，图片不透明则表示您已拥有。</p><p>如果您发现您<font color='red'>缺少</font>某套理念，说明您没有收集这套服装里的任何一件配件。这种情况下，我们建议您将散件设为全收集，然后再跳过这一套套装。</p><p>部分图标我们暂未收录，后续会进行维护，敬请谅解。</p>"
 		}
 			document.getElementById("ShowType3").innerHTML=iHTML
 	}//第三种浏览模式
+	
+	if(viewmode==4){
+		var VER=[1375],temp=0
+		var BB=parseInt(document.getElementById("sx").value)
+		if(isNaN(BB)){BB=1}
+		document.getElementById("ShowList").innerHTML='<select onchange="Show(Type,Rank,1)" id="sx"></select>'
+		for(var i=1376;i<=DataSum;i++){
+		 if(typeof(version[i])!='undefined'){
+			 VER.push(i)
+			 temp=temp+1
+			 document.getElementById("sx").options.add(new Option(version[i], temp))
+			 }
+		}
+		
+		
+		var ihtml='<table border="1" cellspacing="0"><tr><th>服饰清单</th><th>是否拥有</th></tr>',listsum=0,c='234, 242, 250'
+			for(var i=(VER[BB-1]);i<=(VER[BB]-1);i++){
+				listsum=listsum+1;
+				if(c=='234, 242, 250'){c='219, 229, 248'}else{c='234, 242, 250'}
+				if(Data[i][2]<8){Data[i][2]=Data[i][2]-1}
+				if(Data[i][2]==14.3){Data[i][2]=11}
+				if(Data[i][2]==8.1){Data[i][2]=7}
+				if(Data[i][2]==8.2){Data[i][2]=8}
+				if(Data[i][2]>=11){Data[i][2]=Data[i][2]+1}
+				if(Data[i][2]>15){Data[i][2]=15}
+				
+				
+				var temp=Data[i][0]+"("+Rankstr[5-Data[i][1]]+"-"+Powerstr[GetMainPower(i)-3]+")"
+				ihtml=ihtml+'<tr onclick=\"set('+i.toString()+')\"><td style="background: rgba('+c+', 0.5)">'+temp+'</td><td style="background: rgba('+c+', 0.5)" id=\"id'+i.toString()+'\"><img src="image/'+(Cloth[i]==1?"g":"r")+'.png" width="32" height="40" /></td></tr>'
+			   }
+		document.getElementById("ShowList").innerHTML=document.getElementById("ShowList").innerHTML+'<p>该版本共更新了'+listsum+'件服饰</p>'+ihtml+"</table>"
+		document.getElementById("sx").options[BB-1].selected=true;
+	}//第四种浏览模式
+	
+	if(viewmode==5){
+		if(document.getElementById("N")==null){
+			var clothname=""
+		}else{
+			var clothname=document.getElementById("N").value
+		}
+		document.getElementById("ShowList").innerHTML='服饰名字：<input type="text" id="N" onchange="Show(0,0,0)"/>'
+		if(clothname==""){return;}
+		
+		var ihtml='<table border="1" cellspacing="0"><tr><th>服饰清单</th><th>是否拥有</th></tr>',listsum=0,c='234, 242, 250'
+		
+			for(var i=0;i<=DataSum-1;i++){
+				if(Data[i][0].indexOf(clothname)>=0){
+					listsum=listsum+1;
+					if(c=='234, 242, 250'){c='219, 229, 248'}else{c='234, 242, 250'}
+					ihtml=ihtml+'<tr onclick=\"set('+i.toString()+')\"><td style="background: rgba('+c+', 0.5)">'+Data[i][0]+'</td><td style="background: rgba('+c+', 0.5)" id=\"id'+i.toString()+'\"><img src="image/'+(Cloth[i]==1?"g":"r")+'.png" width="32" height="40" /></td></tr>'	
+				}
+			}
+			if(listsum==0){document.getElementById("N").value=clothname;return;}
+		document.getElementById("ShowList").innerHTML=document.getElementById("ShowList").innerHTML+ihtml+"</table>"
+		document.getElementById("N").value=clothname
+	}//第五种浏览模式
+	
+	if(viewmode==6){
+		document.getElementById("ShowList").innerHTML='数据加载中，请稍候……<select onchange="Show(Type,Rank,1)" id="sx"></select>'
+		templist=[];
+		var ihtml='<table border="1" cellspacing="0"><tr><th>名字</th><th>'+Powerstr[power-3]+'</th><th>获取途径</th></tr>',listsum=0,c='234, 242, 250'
+			for(var i=0;i<=DataSum-1;i++){
+			   if(Data[i][2]>14 && Data[i][2]!=14.3){Data[i][2]=14}
+			   if(Data[i][2]==type){
+				listsum=listsum+1;
+				templist[listsum]=i
+			   }
+			}
+			var temp;
+			for(var i=1; i<=listsum;i++)
+			{
+				for(var j=i+1;j<=listsum;j++)
+				{
+					 if(Data[templist[i]][power]<Data[templist[j]][power])
+					  {
+						 temp=templist[i];
+						 templist[i]=templist[j];
+						 templist[j]=temp;
+					   }
+				 }
+			}
+			
+			temp=0
+			for(var i=1; i<=listsum;i++){
+				if(c=='234, 242, 250'){c='219, 229, 248'}else{c='234, 242, 250'}
+				temp=temp+Cloth[templist[i]]
+				ihtml=ihtml+'<tr><td style="background: rgba('+c+', 0.5)">'+Data[templist[i]][0]+'</td><td style="background: rgba('+c+', 0.5)">'+Data[templist[i]][power].toString()+'</td><td style="background: rgba('+c+', 0.5)"><font size="2">'+(Way[templist[i]][0]==""?"未知":Way[templist[i]][0])+'</font></td></tr>'
+			}
+				document.getElementById("ShowList").innerHTML='<font size="2"><select onchange="Show(Type,Rank,1)" id="sx"></select>属性顶配分析</font><hr class="fgx2"><p>&nbsp;</p>'+ihtml+"</table>"
+				
+				
+				
+				for(var i=0; i<=4;i++){document.getElementById("sx").options.add(new Option(Powerstr[i], i+3))}
+				
+				document.getElementById("sx").options[power-3].selected=true;
+	}//第六种浏览模式
+	
+	
+	
 	return listsum;
  }
  
@@ -277,7 +409,7 @@ function TapChange(lr){
 	}
 	}
 	
-	if (viewmode==2){
+	if (viewmode==2 || viewmode==6){
 		if(lr==2){
 			if (Type<16){TypeClick(Type+1);location.href="#Button1"}
 		}else{
@@ -291,6 +423,11 @@ function TapChange(lr){
 		location.href="#Button1"
 	}	
 	
+	if (viewmode==4){
+		document.getElementById("sx").options[document.getElementById("sx").selectedIndex+(lr==2?1:-1)].selected=true;
+		Show(0,0,0)
+		location.href="#Button1"
+	}	
 }
 
 function SetAll(index,state){
